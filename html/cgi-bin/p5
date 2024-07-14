@@ -1,0 +1,13 @@
+# p5 0x8b 0b10001011
+carrier 38000
+pulse 3125
+space 9375
+pulse 3125
+space 3125
+pulse 6250
+space 25000
+pulse 3125
+space 9375
+pulse 3125
+space 3125
+pulse 6250

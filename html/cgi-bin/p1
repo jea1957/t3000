@@ -1,0 +1,9 @@
+# p1 0x83 0b10000011
+carrier 38000
+pulse 3125
+space 15625
+pulse 6250
+space 25000
+pulse 3125
+space 15625
+pulse 6250

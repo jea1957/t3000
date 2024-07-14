@@ -1,0 +1,13 @@
+# p4 0x89 0b10001001
+carrier 38000
+pulse 3125
+space 9375
+pulse 3125
+space 6250
+pulse 3125
+space 25000
+pulse 3125
+space 9375
+pulse 3125
+space 6250
+pulse 3125

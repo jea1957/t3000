@@ -1,0 +1,13 @@
+# p2 0x85 0b10000101
+carrier 38000
+pulse 3125
+space 12500
+pulse 3125
+space 3125
+pulse 3125
+space 25000
+pulse 3125
+space 12500
+pulse 3125
+space 3125
+pulse 3125

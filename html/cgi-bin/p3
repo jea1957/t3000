@@ -1,0 +1,9 @@
+# p3 0x87 0b10000111
+carrier 38000
+pulse 3125
+space 12500
+pulse 9375
+space 25000
+pulse 3125
+space 12500
+pulse 9375

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href = "t3000.css">
+  <title>Terminal 3000 Remote Control</title>
+</head>
+<body>
+  <div class="grid-container">
+    <div class="grid-item">
+      <button type="button" name="down"><</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="up">></button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="ph">PH</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="tp">TP</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="p1">P1</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="p2">P2</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="p3">P3</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="p4">P4</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="p5">P5</button>
+    </div>
+    <div class="grid-item">
+      <button type="button" name="mute">MUTE</button>
+    </div>
+    <div class="grid-item two-column">
+      <button type="button" name="standby">STANDBY</button>
+    </div>
+  </div>
+  <script>
+    "use strict";
+
+    const USE_REPEATING_BUTTONS = false
+
+    // Send button to server via a GET request
+    async function sendButton(button) {
+        //console.log(`sendButton: ${button}`);
+        const url = `cgi-bin/remote.py?button=${button}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const text = await response.text();
+            const status = parseInt(text.trim()[0]);
+            if (status) {
+                console.error(text.trim());
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+	// Disable context (right click) menu
+	document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        if (USE_REPEATING_BUTTONS) {
+            const TIMEOUT =  500;
+            const INTERVAL = 200;
+            let timeoutId = null;
+            let intervalId = null;
+
+            // Handle initial timeout and add interval timer
+            function timeout(button) {
+                // Call sendButton() and start interval timer
+                //console.log(`timeout: ${button}`);
+                sendButton(button);
+                if (!intervalId) {
+                    intervalId = setInterval(sendButton, INTERVAL, button);
+                }
+            }
+
+            // Add event handler on the body element that starts it all
+            ['pointerdown'].forEach((event) => {
+                document.body.addEventListener(event, function(e) {
+                    if (e.target.nodeName === 'BUTTON') {
+                        // Call sendButton() and start timeout timer
+                        const button = e.target.name;
+                        //console.log(`start ${button}`, e);
+                        sendButton(button);
+                        if (!timeoutId) {
+                            timeoutId = setTimeout(timeout, TIMEOUT, button);
+                        }
+                    }
+                });
+            });
+
+            // Add event handler on the body element that stops the timer
+            ['pointerup', 'pointercancel', 'pointerout', 'pointerleave'].forEach((event) => {
+                document.body.addEventListener(event, function(e) {
+                    //console.log(`stop event ${e.type}`);
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                    clearInterval(intervalId);
+                    intervalId = null;
+                });
+            });
+        } else { // Use 'click' only
+            document.body.addEventListener('click', function(e) {
+                //console.log(`click event ${e.type} ${e.target.nodeName}`);
+                if (e.target.nodeName === 'BUTTON') {
+                    // Call sendButton()
+                    const button = e.target.name;
+                    //console.log(`start ${button}`, e);
+                    sendButton(button);
+                }
+            });
+        }
+    });
+  </script>
+</body>
+</html>

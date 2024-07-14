@@ -1,0 +1,11 @@
+[Unit]
+Description=Terminal 3000
+After=network.target
+
+[Service]
+WorkingDirectory=/home/jea/t3000/html
+ExecStart=/usr/bin/python3 -m http.server --cgi
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

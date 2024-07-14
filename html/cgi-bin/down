@@ -1,0 +1,17 @@
+# down 0xa5 0b10100101
+carrier 38000
+pulse 3125
+space 3125
+pulse 3125
+space 6250
+pulse 3125
+space 3125
+pulse 3125
+space 25000
+pulse 3125
+space 3125
+pulse 3125
+space 6250
+pulse 3125
+space 3125
+pulse 3125

@@ -1,0 +1,13 @@
+# standby 0x9b 0b10011011
+carrier 38000
+pulse 3125
+space 6250
+pulse 6250
+space 3125
+pulse 6250
+space 25000
+pulse 3125
+space 6250
+pulse 6250
+space 3125
+pulse 6250
